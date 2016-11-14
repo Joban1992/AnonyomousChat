@@ -1,0 +1,129 @@
+
+
+  <style>
+::-webkit-scrollbar {
+    width: 5px;
+}
+::-webkit-scrollbar-track {
+    background-color: #eaeaea;
+    border-left: 1px solid #ccc;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
+  </style>
+
+    	<div class="ui">
+		<div class="left-menu">
+				<form action="#" class="search">
+					<input placeholder="search..." type="search" name="" ng-model="serachUser.$">
+					<input value="&#xf002;">
+				</form>
+				<menu class="list-friends">
+					<li ng-repeat="user in onlineUsers |myfilter |filter:serachUser as availableUsers track by $index" ng-click="startChat(user)" style="position: relative">
+						<img width="50" height="50" src="Assets/img/4.jpg">
+						<div class="info">
+							<div class="user">{{user.name}}</div>
+							<div class="status on"> online</div>
+							<div class="status new-msg" ng-if="user.newmsgWhileInactive" style="position: absolute;top: 10px;right: 0;"></div>
+						</div>
+					</li>
+					<li ng-if="availableUsers.length==0" style="color:#fff">No User available</li>
+				</menu>
+		</div>
+		<div class="chat" ng-show="chatBoxOpened">
+			<div class="top">
+				<div class="avatar">
+					<img width="50" height="50" src="Assets/img/4.jpg">
+				</div>
+				<div class="info">
+					<div class="name">{{receiver.name}}</div>
+					<div class="count">{{receiver.email}}</div>
+				</div>
+				<i class="fa fa-star"></i>
+			</div>
+			
+			<ul class="messages" style="overflow-y: scroll;" id="chatMessages">
+			  <span ng-repeat="messages in receiver.msg">
+		        <li class="i" ng-if="messages.sender.email==userdetails.email">
+					<div class="head">
+						<span class="time">{{messages.time}}, Today</span>
+						<span class="name">{{messages.sender.name}}</span>
+					</div>
+					<div class="message">{{messages.msg}}</div>
+				</li>
+				<li class="friend-with-a-SVAGina" ng-if="messages.sender.email!=userdetails.email">
+					<div class="head">
+						<span class="time">{{messages.time}}, Today</span>
+						<span class="name">{{messages.sender.name}}</span>
+					</div>
+					<div class="message">{{messages.msg}}</div>
+				</li>
+			</span>
+				
+				
+			</ul>
+			<div class="write-form">
+				<textarea placeholder="Type your message" name="e" id="texxt"  rows="2" ng-model="usermessage" ng-keypress="sendChatMessage($event)"></textarea>
+				<i class="fa fa-picture-o"></i>
+				<i class="fa fa-file-o"></i>
+				<span class="send" ng-click="sendChatMessage()">Send</span>
+			</div>
+		</div>
+		<style>
+		 .non-chat{
+		    background-color: #f1f5f8;
+            display: table;
+			width: 70.2%;
+			height: 100%;
+			position:relative;
+		 }
+		 .non-chat span{
+		    text-align: center;
+			display: block;
+			padding: 10px 0 10px 0;
+			background: #2196f3;
+			color: white;
+		 }
+		 .non-chat img{
+		    position: absolute;
+            left: 116px;
+			top: 139px;
+		 }
+		</style>
+		<div class="non-chat" ng-show="!chatBoxOpened">
+		   <img src="Assets/img/main.png">
+		   <span style="">Anonymous Chat</span>
+		</div>
+	</div>
+	<style>
+	.notification{
+	 position: absolute;
+    height: 80px;
+    width: 250px;
+    background: #62bf6e;
+    left: 10px;
+    bottom: 10px;
+    border-radius: 4px;
+    text-align: center;
+    color: #fff;
+    vertical-align: middle;
+    display: table;
+	}
+	
+	.notification span{
+	  padding:10px;
+	  display: table-cell;
+      vertical-align: middle;
+	}
+	</style>
+	<div class="notification" ng-show="notification.showHide">
+	   <span>
+	      <strong>{{notification.username}}</strong> {{notification.message}}
+	   </span>
+	</div>
+
+
